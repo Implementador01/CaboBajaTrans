@@ -4,6 +4,7 @@ import Opcionales from './pages/Opcionales';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { LanguageProvider } from './context/LanguageContext'; // Importa el proveedor de idioma
+import Home from './pages/Home'; // Importa tu componente Home
 
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
         <Header /> {/* El header se mostrará en todas las páginas */}
         <div className="min-h-screen">
           <Routes>
-            <Route path="/" element={<FormularioReserva />} />
+            {/* Asegúrate de que la ruta de Home esté disponible */}
+            <Route path="/" element={<Home />} />
+            <Route path="/reserva" element={<FormularioReserva />} />
             <Route path="/opcionales" element={<Opcionales />} />
           </Routes>
         </div>
