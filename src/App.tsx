@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import FormularioReserva from './components/FormularioReserva';
 import Opcionales from './pages/Opcionales';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Home from './pages/Home'; 
+import NuestrosTransportes from './pages/NuestrosTransportes';
+import SobreNosotros from './pages/SobreNosotros'; // Importa la página "Sobre Nosotros"
 import { LanguageProvider } from './context/LanguageContext'; // Importa el proveedor de idioma
-import Home from './pages/Home'; // Importa tu componente Home
 
 function App() {
   return (
@@ -13,10 +14,10 @@ function App() {
         <Header /> {/* El header se mostrará en todas las páginas */}
         <div className="min-h-screen">
           <Routes>
-            {/* Asegúrate de que la ruta de Home esté disponible */}
             <Route path="/" element={<Home />} />
-            <Route path="/reserva" element={<FormularioReserva />} />
             <Route path="/opcionales" element={<Opcionales />} />
+            <Route path="/nuestros-transportes" element={<NuestrosTransportes />} />
+            <Route path="/sobre-nosotros" element={<SobreNosotros />} /> {/* Añadir la ruta de Sobre Nosotros */}
           </Routes>
         </div>
         <Footer />

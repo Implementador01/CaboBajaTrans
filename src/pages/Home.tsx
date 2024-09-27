@@ -53,20 +53,22 @@ const Home: React.FC = () => {
             { zone: 'ZONE 4', destination: language === 'es' ? 'LADO PACÍFICO' : 'PACIFIC SIDE', price: 190 },
             { zone: 'ZONE 5', destination: language === 'es' ? 'NORTE PACÍFICO' : 'PACIFIC NORTH', price: 215 }
           ].map((item, index) => (
-            <div key={index} className="flex flex-col p-4 border rounded-lg shadow-lg text-center">
-              <h3 className="text-lg font-bold">{item.zone}</h3>
-              <p className="text-gray-500 text-sm">{language === 'es' ? 'DEL AEROPUERTO (SJD) A' : 'AIRPORT (SJD) TO'}</p>
-              <p className="font-semibold text-gray-700">{item.destination}</p>
-              <p className="mt-2 text-xl font-bold">${item.price} USD</p>
-              <p className="text-gray-500">{language === 'es' ? 'VIAJE REDONDO' : 'ROUND TRIP'}</p>
-              <div className="flex-grow"></div> {/* Espaciador flexible */}
-              <button 
-                className="mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 self-center"
-                onClick={scrollToForm} // Al hacer clic, se desplaza hasta el formulario
-              >
-                {language === 'es' ? 'RESERVAR AHORA' : 'BOOK NOW'}
-              </button>
-            </div>
+            <div key={index} className="flex flex-col p-4 border rounded-lg shadow-lg text-center h-full">
+            <h3 className="text-lg font-bold">{item.zone}</h3>
+            <p className="text-gray-500 text-sm">{language === 'es' ? 'DEL AEROPUERTO (SJD) A' : 'AIRPORT (SJD) TO'}</p>
+            <p className="font-semibold text-gray-700">{item.destination}</p>
+            <p className="mt-2 text-xl font-bold">${item.price} USD</p>
+            <p className="text-gray-500">{language === 'es' ? 'VIAJE REDONDO' : 'ROUND TRIP'}</p>
+            <div className="flex-grow"></div> {/* Espaciador flexible */}
+            <button 
+              className="mt-4 bg-blue-600 text-white py-3 px-4 rounded w-full hover:bg-blue-700 self-end min-h-[50px] text-xs font-bold leading-none flex items-center justify-center" // Ajustes del botón
+              onClick={scrollToForm} // Al hacer clic, se desplaza hasta el formulario
+            >
+              {language === 'es' ? 'RESERVAR AHORA' : 'BOOK NOW'}
+            </button>
+          </div>
+          
+
           ))}
         </div>
       </div>
