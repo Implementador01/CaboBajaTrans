@@ -41,7 +41,7 @@ const Opcionales: React.FC = () => {
           </div>
           <div className="text-center">
             <span className="text-gray-400 font-bold">4</span>
-            <p>{language === 'es' ? 'Confirmación' : 'Confirmation'}</p>
+            <p>{language === 'es' ? 'Confirmación y Pago' : 'Confirmation and Payment'}</p>
           </div>
         </div>
 
@@ -130,11 +130,12 @@ const Opcionales: React.FC = () => {
             {language === 'es' ? 'Regresar' : 'Go Back'}
           </button>
           <button
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-            onClick={() => alert('Continuando a la siguiente página')}
-          >
-            {language === 'es' ? 'Continuar' : 'Continue'}
-          </button>
+  className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+  onClick={() => navigate('/detalles-contacto')} // Navegar a la nueva ruta
+>
+  {language === 'es' ? 'Continuar' : 'Continue'}
+</button>
+
         </div>
       </div>
     </>

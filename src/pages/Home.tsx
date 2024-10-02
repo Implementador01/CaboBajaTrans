@@ -45,7 +45,7 @@ const Home: React.FC = () => {
         </div>
 
         {/* Columna derecha con las cinco columnas de precios */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6"> {/* Aumentamos el espaciado */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 text-align-center"> {/* Aumentamos el espaciado */}
           {[
             { zone: 'ZONE 1', destination: language === 'es' ? 'SAN JOSÉ DEL CABO' : 'SAN JOSE DEL CABO', price: 155 },
             { zone: 'ZONE 2', destination: language === 'es' ? 'CORREDOR' : 'CORRIDOR', price: 175 },
@@ -53,7 +53,10 @@ const Home: React.FC = () => {
             { zone: 'ZONE 4', destination: language === 'es' ? 'LADO PACÍFICO' : 'PACIFIC SIDE', price: 190 },
             { zone: 'ZONE 5', destination: language === 'es' ? 'NORTE PACÍFICO' : 'PACIFIC NORTH', price: 215 }
           ].map((item, index) => (
-            <div key={index} className="flex flex-col p-4 border rounded-lg shadow-lg text-center h-full">
+            <div 
+              key={index} 
+              className="flex flex-col justify-center items-center p-4 border rounded-lg shadow-lg text-center h-full"
+            >
               <h3 className="text-lg font-bold">{item.zone}</h3>
               <p className="text-gray-500 text-sm">{language === 'es' ? 'DEL AEROPUERTO (SJD) A' : 'AIRPORT (SJD) TO'}</p>
               <p className="font-semibold text-gray-700">{item.destination}</p>
