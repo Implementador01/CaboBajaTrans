@@ -1,21 +1,24 @@
-import React, { useState, useContext } from 'react'; // Importar useContext
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LanguageContext } from '../context/LanguageContext'; // Importar el contexto de idioma
+import { LanguageContext } from '../context/LanguageContext';
+import { calcularPrecio } from '../utils/calcularPrecios';
+import { mapeoZonas, Zona } from '../utils/mapeoZonas';
+
+// Definir las capacidades máximas de cada tipo de camioneta
+const capacidades: { [key: string]: number } = {
+  "SUV (1-5 PAX)": 5,
+  "VAN 1-10": 10,
+  "ESCALADE 1-5": 5,
+  "JAC 1-14": 14,
+  "SPRINTER 1-19": 19,
+};
 
 const FormularioReserva: React.FC = () => {
   const navigate = useNavigate();
-  const { language } = useContext(LanguageContext); // Obtener el idioma actual del contexto
-
-  // Definir Destinos
-  const lugares = [
-    "Aeropuerto de San Jose",
-    "Aeropuerto Privado de San lucas",
-    "1 Homes Preview Cabo",
-    // ... el resto de los lugares
-  ];
+  const { language } = useContext(LanguageContext);
 
   const [formData, setFormData] = useState({
-    servicio: '',
+    servicio: '',  // "Viaje sencillo" o "Viaje redondo"
     origen: '',
     destino: '',
     fecha: '',
@@ -23,7 +26,9 @@ const FormularioReserva: React.FC = () => {
     camioneta: '',
   });
 
-  const [error, setError] = useState(false); // Estado para mostrar el error
+  const [error, setError] = useState(false);
+  const [zona, setZona] = useState<Zona | 'especial' | null>(null);
+  const [precio, setPrecio] = useState<number | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -31,25 +36,37 @@ const FormularioReserva: React.FC = () => {
       ...prevData,
       [name]: value,
     }));
+
+    if (name === 'destino') {
+      const zonaDestino = mapeoZonas[value] || null;
+      setZona(zonaDestino);
+    }
   };
 
-  const handlePasajerosChange = (increment: number) => {
-    const maxPasajeros = formData.camioneta === 'Camioneta Jack de 10 pasajeros' ? 10 : 5;
-    setFormData((prevData) => ({
-      ...prevData,
-      pasajeros: Math.max(1, Math.min(prevData.pasajeros + increment, maxPasajeros)),
-    }));
-  };
+  useEffect(() => {
+    if (formData.camioneta && zona) {
+      let precioCalculado = calcularPrecio({ camioneta: formData.camioneta, zona, destino: formData.destino });
 
+      // Si el servicio es "Viaje redondo", aumentar el precio un 40%
+      if (formData.servicio === 'Viaje redondo') {
+        precioCalculado *= 1.4; // Incrementa el precio en un 40%
+      }
+
+      setPrecio(precioCalculado);
+    }
+  }, [formData.camioneta, zona, formData.destino, formData.servicio]);
+
+  // Función para manejar la redirección a Opcionales
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validación de que todos los campos estén llenos
+    // Validar que todos los campos estén completos
     if (!formData.servicio || !formData.origen || !formData.destino || !formData.fecha || !formData.camioneta) {
-      setError(true); // Mostrar error si faltan campos
+      setError(true);
     } else {
-      setError(false); // No hay errores, proceder con la reserva
-      navigate('/opcionales', { state: formData });
+      setError(false);
+      // Redirigir a la página Opcionales con los datos del formulario y el precio
+      navigate('/opcionales', { state: { ...formData, precio } });
     }
   };
 
@@ -80,7 +97,6 @@ const FormularioReserva: React.FC = () => {
           />
           {language === 'es' ? 'Viaje Redondo' : 'Round Trip'}
         </label>
-  
       </div>
 
       {/* Información del servicio */}
@@ -95,7 +111,7 @@ const FormularioReserva: React.FC = () => {
             className="block w-full mt-1 p-2 border border-gray-300 rounded"
           >
             <option value="">{language === 'es' ? 'Selecciona una opción' : 'Select an option'}</option>
-            {lugares.map((lugar, index) => (
+            {Object.keys(mapeoZonas).map((lugar, index) => (
               <option key={index} value={lugar}>
                 {lugar}
               </option>
@@ -113,7 +129,7 @@ const FormularioReserva: React.FC = () => {
             className="block w-full mt-1 p-2 border border-gray-300 rounded"
           >
             <option value="">{language === 'es' ? 'Selecciona un destino' : 'Select a destination'}</option>
-            {lugares.map((lugar, index) => (
+            {Object.keys(mapeoZonas).map((lugar, index) => (
               <option key={index} value={lugar}>
                 {lugar}
               </option>
@@ -141,7 +157,10 @@ const FormularioReserva: React.FC = () => {
           <label className="block text-gray-700">{language === 'es' ? 'Pasajeros:' : 'Passengers:'}</label>
           <button
             type="button"
-            onClick={() => handlePasajerosChange(-1)}
+            onClick={() => setFormData((prev) => ({
+              ...prev,
+              pasajeros: Math.max(prev.pasajeros - 1, 1)
+            }))}
             className="bg-gray-300 p-2 rounded"
           >
             -
@@ -149,7 +168,10 @@ const FormularioReserva: React.FC = () => {
           <span>{formData.pasajeros}</span>
           <button
             type="button"
-            onClick={() => handlePasajerosChange(1)}
+            onClick={() => setFormData((prev) => ({
+              ...prev,
+              pasajeros: Math.min(prev.pasajeros + 1, capacidades[formData.camioneta] || 1)
+            }))}
             className="bg-gray-300 p-2 rounded"
           >
             +
@@ -166,23 +188,19 @@ const FormularioReserva: React.FC = () => {
             className="block w-full mt-1 p-2 border border-gray-300 rounded"
           >
             <option value="">{language === 'es' ? 'Selecciona una opción' : 'Select an option'}</option>
-            <option value="Suburban negra para 5 pasajeros">{language === 'es' ? 'Suburban negra para 5 pasajeros' : 'Black Suburban for 5 passengers'}</option>
-            <option value="Suburban blanca para 5 pasajeros">{language === 'es' ? 'Suburban blanca para 5 pasajeros' : 'White Suburban for 5 passengers'}</option>
-            <option value="Camioneta Jack de 10 pasajeros">{language === 'es' ? 'Camioneta Jack de 10 pasajeros' : 'Jack Van for 10 passengers'}</option>
-            <option value="Ford Escape de 5 pasajeros">{language === 'es' ? 'Ford Escape de 5 pasajeros' : 'Ford Escape for 5 passengers'}</option>
+            <option value="SUV (1-5 PAX)">{language === 'es' ? 'SUV (1-5 PAX)' : 'SUV (1-5 PAX)'}</option>
+            <option value="VAN 1-10">{language === 'es' ? 'VAN 1-10' : 'VAN 1-10'}</option>
+            <option value="ESCALADE 1-5">{language === 'es' ? 'ESCALADE 1-5' : 'ESCALADE 1-5'}</option>
+            <option value="JAC 1-14">{language === 'es' ? 'JAC 1-14' : 'JAC 1-14'}</option>
+            <option value="SPRINTER 1-19">{language === 'es' ? 'SPRINTER 1-19' : 'SPRINTER 1-19'}</option>
           </select>
         </div>
       </div>
 
-      {/* Nueva sección con leyenda */}
-      <div className="bg-yellow-100 p-4 rounded text-center text-yellow-700">
-        <p>{language === 'es' ? 'Nos pondremos en contacto contigo para fijar detalles' : 'We will contact you to set the time'}</p>
-      </div>
-
-      {/* Mostrar error si no se completan todos los campos */}
-      {error && (
-        <div className="text-red-500 text-center mt-4">
-          {language === 'es' ? 'Por favor completa todos los campos.' : 'Please complete all fields.'}
+      {/* Mostrar precio calculado */}
+      {precio && (
+        <div className="bg-green-100 p-4 rounded text-center text-green-700">
+          {language === 'es' ? `Precio estimado: $${precio.toFixed(2)}` : `Estimated Price: $${precio.toFixed(2)}`}
         </div>
       )}
 

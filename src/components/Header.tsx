@@ -54,7 +54,7 @@ const Header: React.FC = () => {
         </div>
 
         <div className="flex items-center">
-          <p className="mr-4 hidden md:block">{language === 'es' ? 'Llámanos' : 'Call us'}: +52 123 456 7890</p>
+          <p className="mr-4 hidden md:block">{language === 'es' ? 'Llámanos' : 'Call us'}: 62 43 18 32 31</p>
           <button
             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors flex items-center"
             onClick={toggleLanguage}

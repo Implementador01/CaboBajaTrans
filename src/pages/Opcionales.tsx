@@ -1,26 +1,63 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom'; 
-import { LanguageContext } from '../context/LanguageContext'; // Importar el contexto de idioma
+import { LanguageContext } from '../context/LanguageContext';
+
+// Importar las imágenes de las camionetas
+import Van from '../assets/Van.jpg';
+import Escalade from '../assets/Escalade.jpg';
+import JackVan from '../assets/JackVan.jpg';
+import Sprinter from '../assets/Sprinter.jpg';
 
 const Opcionales: React.FC = () => {
-  const { language } = useContext(LanguageContext); // Acceder al idioma actual del contexto
+  const { language } = useContext(LanguageContext);
   const navigate = useNavigate();
   const location = useLocation();
+  
+  // Estado inicial de los servicios opcionales
   const [servicios, setServicios] = useState({
     carSeat: 0,
     beerPack: 0,
     boosterSeat: 0,
     shoppingStop: 0,
+    champagneBottle: 0, // Nueva opción para la botella de champaña
   });
 
+  // Precio base y camioneta seleccionada recibidos desde el estado
+  const precioBase = location.state?.precio || 0;
+  const camionetaSeleccionada = location.state?.camioneta || '';
+  const origen = location.state?.origen;
+  const destino = location.state?.destino;
+  const pasajeros = location.state?.pasajeros;
+  const fecha = location.state?.fecha;
+  const servicio = location.state?.servicio;
+
+  // Mapeo de imágenes basado en la camioneta seleccionada
+  const camionetaImagenes: { [key: string]: string } = {
+    "SUV (1-5 PAX)": Van,
+    "VAN 1-10": Van,
+    "ESCALADE 1-5": Escalade,
+    "JAC 1-14": JackVan,
+    "SPRINTER 1-19": Sprinter,
+  };
+
+  // Obtener la imagen de la camioneta seleccionada
+  const camionetaImagen = camionetaImagenes[camionetaSeleccionada] || null;
+
+  // Manejar cambios en los servicios opcionales
   const handleChange = (name: keyof typeof servicios, increment: number) => {
     setServicios((prev) => ({
       ...prev,
-      [name]: Math.max(0, prev[name] + increment), 
+      [name]: Math.max(0, prev[name] + increment),
     }));
   };
 
-  const total = servicios.carSeat * 10 + servicios.beerPack * 30 + servicios.boosterSeat * 10 + servicios.shoppingStop * 50;
+  // Cálculo total del precio (precio base + opcionales)
+  const total = precioBase 
+    + (servicios.carSeat * 10) 
+    + (servicios.beerPack * 30) 
+    + (servicios.boosterSeat * 10) 
+    + (servicios.shoppingStop * 50) 
+    + (servicios.champagneBottle * 30); // Agregar costo de la botella de champaña
 
   return (
     <>
@@ -37,11 +74,7 @@ const Opcionales: React.FC = () => {
           </div>
           <div className="text-center">
             <span className="text-gray-400 font-bold">3</span>
-            <p>{language === 'es' ? 'Detalles de Contacto' : 'Contact Details'}</p>
-          </div>
-          <div className="text-center">
-            <span className="text-gray-400 font-bold">4</span>
-            <p>{language === 'es' ? 'Confirmación y Pago' : 'Confirmation and Payment'}</p>
+            <p>{language === 'es' ? 'Detalles de Contacto y Pago' : 'Contact Details and Payment'}</p>
           </div>
         </div>
 
@@ -49,12 +82,23 @@ const Opcionales: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-gray-100 p-4 rounded shadow">
             <h2 className="text-lg font-bold mb-4">{language === 'es' ? 'Resumen' : 'Summary'}</h2>
-            <p><strong>{language === 'es' ? 'Tipo de Servicio:' : 'Service Type:'}</strong> {location.state?.servicio || (language === 'es' ? 'No especificado' : 'Not specified')}</p>
-            <p><strong>{language === 'es' ? 'Fecha:' : 'Date:'}</strong> {location.state?.fecha || (language === 'es' ? 'No especificado' : 'Not specified')}</p>
-            <p><strong>{language === 'es' ? 'Desde:' : 'From:'}</strong> {location.state?.origen || (language === 'es' ? 'No especificado' : 'Not specified')}</p>
-            <p><strong>{language === 'es' ? 'Hasta:' : 'To:'}</strong> {location.state?.destino || (language === 'es' ? 'No especificado' : 'Not specified')}</p>
-            <p><strong>{language === 'es' ? 'Pasajeros:' : 'Passengers:'}</strong> {location.state?.pasajeros || (language === 'es' ? 'No especificado' : 'Not specified')}</p>
-            <p><strong>{language === 'es' ? 'Vehículo:' : 'Vehicle:'}</strong> {location.state?.camioneta || (language === 'es' ? 'No especificado' : 'Not specified')}</p>
+            <p><strong>{language === 'es' ? 'Tipo de Servicio:' : 'Service Type:'}</strong> {servicio || (language === 'es' ? 'No especificado' : 'Not specified')}</p>
+            <p><strong>{language === 'es' ? 'Fecha:' : 'Date:'}</strong> {fecha || (language === 'es' ? 'No especificado' : 'Not specified')}</p>
+            <p><strong>{language === 'es' ? 'Desde:' : 'From:'}</strong> {origen || (language === 'es' ? 'No especificado' : 'Not specified')}</p>
+            <p><strong>{language === 'es' ? 'Hasta:' : 'To:'}</strong> {destino || (language === 'es' ? 'No especificado' : 'Not specified')}</p>
+            <p><strong>{language === 'es' ? 'Pasajeros:' : 'Passengers:'}</strong> {pasajeros || (language === 'es' ? 'No especificado' : 'Not specified')}</p>
+            <p><strong>{language === 'es' ? 'Vehículo:' : 'Vehicle:'}</strong> {camionetaSeleccionada || (language === 'es' ? 'No especificado' : 'Not specified')}</p>
+            
+            {/* Mostrar la imagen de la camioneta seleccionada */}
+            {camionetaImagen && (
+              <div className="mt-4">
+                <img
+                  src={camionetaImagen}
+                  alt={camionetaSeleccionada || 'Camioneta seleccionada'}
+                  className="w-full h-36 object-contain rounded-lg"
+                />
+              </div>
+            )}
           </div>
 
           {/* Servicios Opcionales */}
@@ -112,6 +156,19 @@ const Opcionales: React.FC = () => {
                 <button onClick={() => handleChange('shoppingStop', 1)} className="bg-gray-300 p-1 rounded">+</button>
               </div>
             </div>
+
+            {/* Servicio: Botella de Champaña */}
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <p>{language === 'es' ? 'Botella de Champaña' : 'Champagne Bottle'}</p>
+                <p className="text-sm text-gray-500">$30.00 USD</p>
+              </div>
+              <div className="flex items-center space-x-2">
+                <button onClick={() => handleChange('champagneBottle', -1)} className="bg-gray-300 p-1 rounded">-</button>
+                <span>{servicios.champagneBottle}</span>
+                <button onClick={() => handleChange('champagneBottle', 1)} className="bg-gray-300 p-1 rounded">+</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -130,12 +187,22 @@ const Opcionales: React.FC = () => {
             {language === 'es' ? 'Regresar' : 'Go Back'}
           </button>
           <button
-  className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-  onClick={() => navigate('/detalles-contacto')} // Navegar a la nueva ruta
->
-  {language === 'es' ? 'Continuar' : 'Continue'}
-</button>
-
+            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+            onClick={() => navigate('/detalles-contacto', { 
+              state: { 
+                total, 
+                servicios, 
+                camionetaSeleccionada, 
+                origen, 
+                destino, 
+                pasajeros, 
+                fecha, 
+                servicio 
+              } 
+            })} // Pasamos el total, servicios, y datos del formulario a la siguiente página
+          >
+            {language === 'es' ? 'Continuar' : 'Continue'}
+          </button>
         </div>
       </div>
     </>
