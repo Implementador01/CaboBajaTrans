@@ -26,7 +26,7 @@ const FormularioReserva: React.FC = () => {
     camioneta: '',
   });
 
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(false); // Usamos este estado para mostrar errores
   const [zona, setZona] = useState<Zona | 'especial' | null>(null);
   const [precio, setPrecio] = useState<number | null>(null);
 
@@ -62,16 +62,22 @@ const FormularioReserva: React.FC = () => {
 
     // Validar que todos los campos estén completos
     if (!formData.servicio || !formData.origen || !formData.destino || !formData.fecha || !formData.camioneta) {
-      setError(true);
+      setError(true); // Activar el estado de error si falta información
     } else {
-      setError(false);
-      // Redirigir a la página Opcionales con los datos del formulario y el precio
+      setError(false); // No hay error, redirigir al siguiente paso
       navigate('/opcionales', { state: { ...formData, precio } });
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="max-w-3xl mx-auto bg-white shadow-md rounded p-6 space-y-6">
+      {/* Mostrar mensaje de error si faltan campos */}
+      {error && (
+        <div className="bg-red-100 p-4 rounded text-red-700 text-center">
+          {language === 'es' ? 'Por favor, completa todos los campos.' : 'Please fill out all fields.'}
+        </div>
+      )}
+
       {/* Selección del servicio */}
       <div className="grid grid-cols-2 gap-4 bg-gray-100 p-4 rounded">
         <div className="col-span-2 text-center text-xl font-bold text-gray-700 mb-4">
