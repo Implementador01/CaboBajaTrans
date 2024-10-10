@@ -3,7 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
 import { LanguageContext } from '../context/LanguageContext';
 
-const stripePromise = loadStripe('pk_live_51Q6G3D01kPYg7t5t6s4PEgtgHTtEEezeUVzlweRDVmQRbRfj5cJHm0DNtzdYyd8Z0IGDkGhJe9Nl6VG3DABQNdS300cPxdkXho'); // Clave pública live
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY || ''); // Usamos la clave pública desde el .env
 
 interface StripeCheckoutProps {
   total: number;
@@ -17,7 +17,11 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ total }) => {
     setIsProcessing(true);
 
     try {
-      const response = await axios.post('http://localhost:5001/create-checkout-session', {
+      const backendUrl = process.env.NODE_ENV === 'production'
+        ? 'https://tudominio.com'
+        : 'http://localhost:5001';
+
+      const response = await axios.post(`${backendUrl}/create-checkout-session`, {
         amount: total,
       });
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // Usar la clave secreta desde variables de entorno
 const app = express();
 
 app.use(cors());
@@ -23,8 +23,8 @@ app.post('/create-checkout-session', async (req, res) => {
         quantity: 1,
       }],
       mode: 'payment',
-      success_url: 'https://tudominio.com/gracias',  // URL de éxito en producción
-      cancel_url: 'https://tudominio.com/cancelar',  // URL de cancelación en producción
+      success_url: 'https://transportadoracabo.com/gracias',  // URL de éxito en Netlify
+      cancel_url: 'https://transportadoracabo.com/cancelar',  // URL de cancelación en Netlify
     });
 
     res.json({ id: session.id });
@@ -33,4 +33,4 @@ app.post('/create-checkout-session', async (req, res) => {
   }
 });
 
-app.listen(5001, () => console.log('Servidor corriendo en el puerto 5000'));
+app.listen(process.env.PORT || 5001, () => console.log(`Servidor corriendo en el puerto ${process.env.PORT || 5001}`));
