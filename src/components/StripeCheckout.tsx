@@ -1,103 +1,63 @@
-import React, { useState, useContext } from 'react';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import React, { useState, useContext } from 'react'; 
 import { loadStripe } from '@stripe/stripe-js';
-import { LanguageContext } from '../context/LanguageContext'; // Importamos el contexto de idioma
+import axios from 'axios';
+import { LanguageContext } from '../context/LanguageContext';
 
-const stripePromise = loadStripe('TU_CLAVE_PUBLICA_STRIPE');
+const stripePromise = loadStripe('pk_live_51Q6G3D01kPYg7t5t6s4PEgtgHTtEEezeUVzlweRDVmQRbRfj5cJHm0DNtzdYyd8Z0IGDkGhJe9Nl6VG3DABQNdS300cPxdkXho'); // Clave pública live
 
-// Componente de formulario de pago
-const CheckoutForm: React.FC<{ total: number, onPaymentSuccess: () => void }> = ({ total, onPaymentSuccess }) => {
-  const { language } = useContext(LanguageContext); // Accedemos al contexto de idioma
-  const stripe = useStripe();
-  const elements = useElements();
+interface StripeCheckoutProps {
+  total: number;
+}
+
+const StripeCheckout: React.FC<StripeCheckoutProps> = ({ total }) => {
+  const { language } = useContext(LanguageContext);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    if (!stripe || !elements) return;
-
+  const handleClick = async () => {
     setIsProcessing(true);
-    setError(null);
 
-    const cardElement = elements.getElement(CardElement);
+    try {
+      const response = await axios.post('http://localhost:5001/create-checkout-session', {
+        amount: total,
+      });
 
-    if (!cardElement) {
-      setError(language === 'es' ? 'Tarjeta no válida' : 'Invalid card');
-      setIsProcessing(false);
-      return;
-    }
+      const sessionId = response.data.id;
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: 'card',
-      card: cardElement,
-    });
+      const stripe = await stripePromise;
+      if (stripe) {
+        const { error } = await stripe.redirectToCheckout({
+          sessionId,
+        });
 
-    if (error) {
-      console.error('Error en el pago:', error);
-      setError(error.message || (language === 'es' ? 'Error en el pago' : 'Payment error'));
-      setIsProcessing(false);
-    } else {
-      console.log('Método de pago exitoso:', paymentMethod);
-      setPaymentSuccess(true);
-
-      // Aquí llamamos la función para enviar el correo
-      onPaymentSuccess(); // Llama a la función proporcionada para el envío del correo
-
-      setIsProcessing(false);
+        if (error) {
+          console.error('Error en la redirección a Stripe:', error);
+        }
+      } else {
+        console.error('Error al cargar Stripe.');
+      }
+    } catch (error) {
+      console.error('Error al crear la sesión de pago:', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-gray-100 rounded">
-      {paymentSuccess ? (
-        <div className="text-green-500 text-center">
-          {language === 'es' ? '¡Pago realizado con éxito! Gracias por tu compra.' : 'Payment successful! Thank you for your purchase.'}
-        </div>
-      ) : (
-        <>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">{language === 'es' ? 'Detalles de la tarjeta' : 'Card Details'}</label>
-            <CardElement className="p-2 border rounded" />
-          </div>
+    <div className="max-w-lg mx-auto p-4 bg-gray-100 rounded">
+      <div className="mb-4 text-center">
+        <p className="text-lg font-bold">
+          {language === 'es' ? `Total a pagar: $${total} USD` : `Total to pay: $${total} USD`}
+        </p>
+      </div>
 
-          {error && (
-            <div className="text-red-500 text-center mb-4">
-              {error}
-            </div>
-          )}
-
-          <div className="mb-4">
-            <p className="text-lg font-bold">{language === 'es' ? `Total a pagar: $${total}` : `Total to pay: $${total}`}</p>
-          </div>
-
-          <button
-            type="submit"
-            disabled={!stripe || isProcessing}
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-          >
-            {isProcessing
-              ? language === 'es'
-                ? 'Procesando...'
-                : 'Processing...'
-              : language === 'es'
-              ? 'Pagar'
-              : 'Pay'}
-          </button>
-        </>
-      )}
-    </form>
-  );
-};
-
-// Componente principal que envuelve el formulario de Stripe
-const StripeCheckout: React.FC<{ total: number, onPaymentSuccess: () => void }> = ({ total, onPaymentSuccess }) => {
-  return (
-    <Elements stripe={stripePromise}>
-      <CheckoutForm total={total} onPaymentSuccess={onPaymentSuccess} />
-    </Elements>
+      <button
+        onClick={handleClick}
+        disabled={isProcessing}
+        className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+      >
+        {isProcessing
+          ? language === 'es' ? 'Procesando...' : 'Processing...'
+          : language === 'es' ? 'Pagar' : 'Pay'}
+      </button>
+    </div>
   );
 };
 

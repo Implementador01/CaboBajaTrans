@@ -79,11 +79,11 @@ const FormularioReserva: React.FC = () => {
       )}
 
       {/* Selección del servicio */}
-      <div className="grid grid-cols-2 gap-4 bg-gray-100 p-4 rounded">
-        <div className="col-span-2 text-center text-xl font-bold text-gray-700 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded" style={{ backgroundColor: '#F5DCB9' }}>
+        <div className="col-span-1 md:col-span-2 text-center text-2xl font-serif font-bold text-gray-700 mb-4">
           {language === 'es' ? 'SELECCIONA TU SERVICIO' : 'SELECT YOUR SERVICE'}
         </div>
-        <label className="block">
+        <label className="block text-center text-blue-900 font-serif font-bold">
           <input
             type="radio"
             name="servicio"
@@ -93,7 +93,7 @@ const FormularioReserva: React.FC = () => {
           />
           {language === 'es' ? 'Viaje Sencillo (Solo Ida)' : 'One Way Trip'}
         </label>
-        <label className="block">
+        <label className="block text-center text-blue-900 font-serif font-bold">
           <input
             type="radio"
             name="servicio"
@@ -106,10 +106,12 @@ const FormularioReserva: React.FC = () => {
       </div>
 
       {/* Información del servicio */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Origen */}
         <div>
-          <label className="block text-gray-700">{language === 'es' ? 'Lugar de Origen' : 'Origin'}</label>
+          <label className="block text-center text-blue-900 font-serif font-bold mb-2">
+            {language === 'es' ? 'Lugar de Origen' : 'Origin'}
+          </label>
           <select
             name="origen"
             value={formData.origen}
@@ -127,7 +129,9 @@ const FormularioReserva: React.FC = () => {
 
         {/* Destino */}
         <div>
-          <label className="block text-gray-700">{language === 'es' ? 'Destino' : 'Destination'}</label>
+          <label className="block text-center text-blue-900 font-serif font-bold mb-2">
+            {language === 'es' ? 'Destino' : 'Destination'}
+          </label>
           <select
             name="destino"
             value={formData.destino}
@@ -144,8 +148,10 @@ const FormularioReserva: React.FC = () => {
         </div>
 
         {/* Fecha de salida */}
-        <div className="col-span-2">
-          <label className="block text-gray-700">{language === 'es' ? 'Fecha y Hora' : 'Date and Time'}</label>
+        <div className="col-span-1 md:col-span-2">
+          <label className="block text-center text-blue-900 font-serif font-bold mb-2">
+            {language === 'es' ? 'Fecha y Hora' : 'Date and Time'}
+          </label>
           <input
             type="datetime-local"
             name="fecha"
@@ -157,36 +163,42 @@ const FormularioReserva: React.FC = () => {
       </div>
 
       {/* Pasajeros y Selección de camioneta */}
-      <div className="grid grid-cols-2 gap-4 items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
         {/* Número de pasajeros */}
-        <div className="flex items-center space-x-4">
-          <label className="block text-gray-700">{language === 'es' ? 'Pasajeros:' : 'Passengers:'}</label>
-          <button
-            type="button"
-            onClick={() => setFormData((prev) => ({
-              ...prev,
-              pasajeros: Math.max(prev.pasajeros - 1, 1)
-            }))}
-            className="bg-gray-300 p-2 rounded"
-          >
-            -
-          </button>
-          <span>{formData.pasajeros}</span>
-          <button
-            type="button"
-            onClick={() => setFormData((prev) => ({
-              ...prev,
-              pasajeros: Math.min(prev.pasajeros + 1, capacidades[formData.camioneta] || 1)
-            }))}
-            className="bg-gray-300 p-2 rounded"
-          >
-            +
-          </button>
+        <div className="flex flex-col items-center space-x-4">
+          <label className="block text-center text-blue-900 font-serif font-bold mb-2">
+            {language === 'es' ? 'Pasajeros:' : 'Passengers:'}
+          </label>
+          <div className="flex items-center space-x-4">
+            <button
+              type="button"
+              onClick={() => setFormData((prev) => ({
+                ...prev,
+                pasajeros: Math.max(prev.pasajeros - 1, 1)
+              }))}
+              className="bg-gray-300 p-2 rounded"
+            >
+              -
+            </button>
+            <span>{formData.pasajeros}</span>
+            <button
+              type="button"
+              onClick={() => setFormData((prev) => ({
+                ...prev,
+                pasajeros: Math.min(prev.pasajeros + 1, capacidades[formData.camioneta] || 1)
+              }))}
+              className="bg-gray-300 p-2 rounded"
+            >
+              +
+            </button>
+          </div>
         </div>
 
         {/* Selección de camioneta */}
         <div>
-          <label className="block text-gray-700">{language === 'es' ? 'Vehículo' : 'Vehicle'}</label>
+          <label className="block text-center text-blue-900 font-serif font-bold mb-2">
+            {language === 'es' ? 'Vehículo' : 'Vehicle'}
+          </label>
           <select
             name="camioneta"
             value={formData.camioneta}

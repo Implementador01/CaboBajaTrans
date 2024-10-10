@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { LanguageContext } from '../context/LanguageContext';
+import LogoFooter from '../assets/Logo_Footer.png'; // Importamos el logo del footer
 
 const Footer: React.FC = () => {
   const { language } = useContext(LanguageContext);
@@ -24,6 +25,11 @@ const Footer: React.FC = () => {
           </p>
         </div>
 
+        {/* Logo en el centro */}
+        <div className="flex justify-center">
+          <img src={LogoFooter} alt="Logo Footer" className="h-20" />
+        </div>
+
         {/* Columna de contactos */}
         <div>
           <h4 className="text-lg font-bold text-white mb-4">
@@ -32,12 +38,13 @@ const Footer: React.FC = () => {
           <p className="text-sm">
             {language === 'es' ? 'TEL OFICINA:' : 'OFFICE PHONE:'} 62 43 18 32 31
           </p>
-          <p className="mt-4 text-sm">E-mail: holacabobaja@gmail.com
-          </p>
+          <p className="mt-4 text-sm">E-mail: holacabobaja@gmail.com</p>
         </div>
+      </div>
 
+      <div className="mt-10 container mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
         {/* Formulario de contacto */}
-        <div className="md:mr-4">
+        <div className="md:col-span-3">
           <iframe
             title={language === 'es' ? 'Formulario de contacto' : 'Contact Form'}
             src={formUrl}
@@ -46,6 +53,7 @@ const Footer: React.FC = () => {
           ></iframe>
         </div>
       </div>
+
       <div className="mt-10 text-center text-sm text-gray-500">
         © 2024 {language === 'es' ? 'Cabo Baja Trans' : 'Cabo Baja Trans'}.{' '}
         {language === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}

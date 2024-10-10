@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import NuestrosTransportes from './pages/NuestrosTransportes'; 
 import { LanguageProvider } from './context/LanguageContext'; 
 import ConfirmacionPago from './pages/ConfirmacionPago';
+import PantallaGracias from './pages/PantallaGracias';  // Asegúrate de importar PantallaGracias
 
 function App() {
   return (
@@ -18,8 +19,9 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/opcionales" element={<Opcionales />} />
             <Route path="/nuestros-transportes" element={<NuestrosTransportes />} />
-            <Route path="/detalles-contacto" element={<DetallesContacto />} /> 
-            <Route path='/confirmacion-pago ' element={<ConfirmacionPago />} />
+            <Route path="/detalles-contacto" element={<DetallesContacto />} /> {/* Pantalla del formulario */}
+            <Route path='/confirmacion-pago' element={<ConfirmacionPago />} />
+            <Route path="/gracias" element={<PantallaGracias />} /> {/* Pantalla de agradecimiento */}
           </Routes>
         </div>
         <Footer />

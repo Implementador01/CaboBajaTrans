@@ -74,7 +74,7 @@ const Opcionales: React.FC = () => {
           </div>
           <div className="text-center">
             <span className="text-gray-400 font-bold">3</span>
-            <p>{language === 'es' ? 'Detalles de Contacto y Pago' : 'Contact Details and Payment'}</p>
+            <p>{language === 'es' ? 'Detalles de Contacto y Pago' : 'Contact and Payment Details'}</p>
           </div>
         </div>
 

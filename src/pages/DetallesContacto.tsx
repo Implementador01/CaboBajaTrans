@@ -3,7 +3,6 @@ import { LanguageContext } from '../context/LanguageContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import StripeCheckout from '../components/StripeCheckout'; // Importamos el componente de Stripe
 import ResumenOrden from '../components/ResumenOrden'; // Importamos el componente de Resumen de Orden
-import axios from 'axios'; // Importamos axios para hacer solicitudes al servidor
 
 const DetallesContacto: React.FC = () => {
   const { language } = useContext(LanguageContext);
@@ -24,27 +23,6 @@ const DetallesContacto: React.FC = () => {
   const formUrl = language === 'es'
     ? 'https://api.leadconnectorhq.com/widget/form/9aZsb8WuR8UIJSxx3aqV'
     : 'https://api.leadconnectorhq.com/widget/form/FvgXEU9PWOvWEcEdaIWc';
-
-  // Función para enviar los detalles de la reserva por correo al servidor
-  const enviarDetallesPorCorreo = async () => {
-    try {
-      const response = await axios.post('http://localhost:5000/enviar-correo', {
-        total,
-        servicios,
-        camionetaSeleccionada,
-        origen,
-        destino,
-        pasajeros,
-        fecha,
-        servicio,
-      });
-      if (response.status === 200) {
-        console.log('Correo enviado con éxito');
-      }
-    } catch (error) {
-      console.error('Error al enviar el correo:', error);
-    }
-  };
 
   return (
     <div className="container mx-auto my-8 p-6 bg-white shadow-md rounded h-auto">
@@ -71,7 +49,7 @@ const DetallesContacto: React.FC = () => {
             src={formUrl}
             style={{
               width: '100%',
-              height: '700px', // Aumentamos la altura para que no se corte
+              height: '700px', // Ajustamos la altura para que no se corte
               border: 'none',
             }}
             title="Formulario de Contacto"
@@ -79,12 +57,12 @@ const DetallesContacto: React.FC = () => {
         </div>
 
         {/* Sección de Pago con Stripe */}
-        <div className="w-full bg-white p-8 shadow-md rounded h-auto">
+        <div className="text-center w-full bg-white p-8 shadow-md rounded h-auto">
           <h2 className="text-lg font-bold mb-4">
             {language === 'es' ? 'Pago con Tarjeta' : 'Card Payment'}
           </h2>
-          {/* Pasamos el total y la función enviarDetallesPorCorreo a StripeCheckout */}
-          <StripeCheckout total={total} onPaymentSuccess={enviarDetallesPorCorreo} />
+          {/* Pasamos el total a StripeCheckout */}
+          <StripeCheckout total={total} />
         </div>
       </div>
 
