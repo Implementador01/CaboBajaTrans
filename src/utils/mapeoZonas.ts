@@ -5,8 +5,8 @@ export type Zona = "zona1" | "zona2" | "zona3" | "zona4" | "zona5";
 export const mapeoZonas: { [direccion: string]: Zona | 'especial' } = {
 
     //Aeropuertos
-"Aeropuerdo de San Jose": "zona5",
-"Aeropuerto de San Cabo": "zona5",
+"Aeropuerto de San Jose": "zona5",
+"Aeropuerto de Los Cabos": "zona5",
 
  // Precios especiales
 "Agave Hotel and Cantina, Buena Vista": "especial",

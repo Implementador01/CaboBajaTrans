@@ -8,6 +8,7 @@ import NuestrosTransportes from './pages/NuestrosTransportes';
 import { LanguageProvider } from './context/LanguageContext'; 
 import ConfirmacionPago from './pages/ConfirmacionPago';
 import PantallaGracias from './pages/PantallaGracias';  // Asegúrate de importar PantallaGracias
+import SobreNosotros from './pages/SobreNosotros';  // Importar SobreNosotros
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/detalles-contacto" element={<DetallesContacto />} /> {/* Pantalla del formulario */}
             <Route path='/confirmacion-pago' element={<ConfirmacionPago />} />
             <Route path="/gracias" element={<PantallaGracias />} /> {/* Pantalla de agradecimiento */}
+            <Route path="/sobre-nosotros" element={<SobreNosotros />} /> {/* Nueva ruta para SobreNosotros */}
           </Routes>
         </div>
         <Footer />

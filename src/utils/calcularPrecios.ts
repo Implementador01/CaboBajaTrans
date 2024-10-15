@@ -16,6 +16,7 @@ const preciosPorZona: { [key in Zona]?: { [key: string]: number } } = {
     "ESCALADE 1-5": 100,
     "JAC 1-14": 100,
     "SPRINTER 1-19": 160,
+    "Expedition 1-5": 100
   },
   zona2: {
     "SUV (1-5 PAX)": 75,
@@ -23,6 +24,7 @@ const preciosPorZona: { [key in Zona]?: { [key: string]: number } } = {
     "ESCALADE 1-5": 100,
     "JAC 1-14": 100,
     "SPRINTER 1-19": 180,
+    "Expedition 1-5": 100
   },
   zona3: {
     "SUV (1-5 PAX)": 85,
@@ -30,6 +32,7 @@ const preciosPorZona: { [key in Zona]?: { [key: string]: number } } = {
     "ESCALADE 1-5": 120,
     "JAC 1-14": 110,
     "SPRINTER 1-19": 200,
+    "Expedition 1-5": 120
   },
   zona4: {
     "SUV (1-5 PAX)": 100,
@@ -37,6 +40,7 @@ const preciosPorZona: { [key in Zona]?: { [key: string]: number } } = {
     "ESCALADE 1-5": 120,
     "JAC 1-14": 110,
     "SPRINTER 1-19": 210,
+    "Expedition 1-5":120
   },
   zona5: {
     "SUV (1-5 PAX)": 100,
@@ -44,6 +48,7 @@ const preciosPorZona: { [key in Zona]?: { [key: string]: number } } = {
     "ESCALADE 1-5": 120,
     "JAC 1-14": 110,
     "SPRINTER 1-19": 210,
+    "Expedition 1-5":120
   },
 };
 

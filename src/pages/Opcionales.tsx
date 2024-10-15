@@ -7,6 +7,7 @@ import Van from '../assets/Van.jpg';
 import Escalade from '../assets/Escalade.jpg';
 import JackVan from '../assets/JackVan.jpg';
 import Sprinter from '../assets/Sprinter.jpg';
+import Expedition from '../assets/Expedition.jpg'; // Nueva imagen para la Expedition
 
 const Opcionales: React.FC = () => {
   const { language } = useContext(LanguageContext);
@@ -33,7 +34,7 @@ const Opcionales: React.FC = () => {
 
   // Mapeo de imágenes basado en la camioneta seleccionada
   const camionetaImagenes: { [key: string]: string } = {
-    "SUV (1-5 PAX)": Van,
+    "Expedition (1-5 PAX)": Expedition, // Añadimos la imagen de la Expedition
     "VAN 1-10": Van,
     "ESCALADE 1-5": Escalade,
     "JAC 1-14": JackVan,

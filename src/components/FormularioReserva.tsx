@@ -6,7 +6,7 @@ import { mapeoZonas, Zona } from '../utils/mapeoZonas';
 
 // Definir las capacidades máximas de cada tipo de camioneta
 const capacidades: { [key: string]: number } = {
-  "SUV (1-5 PAX)": 5,
+  "Expedition (1-5 PAX)": 5, // Cambié a Expedition (1-5 PAX) con capacidad de 5 pasajeros
   "VAN 1-10": 10,
   "ESCALADE 1-5": 5,
   "JAC 1-14": 14,
@@ -206,7 +206,7 @@ const FormularioReserva: React.FC = () => {
             className="block w-full mt-1 p-2 border border-gray-300 rounded"
           >
             <option value="">{language === 'es' ? 'Selecciona una opción' : 'Select an option'}</option>
-            <option value="SUV (1-5 PAX)">{language === 'es' ? 'SUV (1-5 PAX)' : 'SUV (1-5 PAX)'}</option>
+            <option value="Expedition (1-5 PAX)">{language === 'es' ? 'Expedition (1-5 PAX)' : 'Expedition (1-5 PAX)'}</option>
             <option value="VAN 1-10">{language === 'es' ? 'VAN 1-10' : 'VAN 1-10'}</option>
             <option value="ESCALADE 1-5">{language === 'es' ? 'ESCALADE 1-5' : 'ESCALADE 1-5'}</option>
             <option value="JAC 1-14">{language === 'es' ? 'JAC 1-14' : 'JAC 1-14'}</option>
