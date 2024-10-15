@@ -2,12 +2,14 @@ import React, { useContext } from 'react';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import ViajeEnGlobo from '../assets/ViajeEnGlobo.webp'; 
 import Surfear from '../assets/Surfear.avif'; 
 import Esnorquel from '../assets/Esnorquel.jpg'; 
 import ArcoLosCabos from '../assets/ArcoLosCabos.jpeg'; 
 import TuburioCarrusel from '../assets/TuburioCarrusel.jpg'; 
 import RestauranteCarrusel from '../assets/RestauranteCarrusel.jpg'; 
+import Racers from '../assets/Racers.jpg'; // Nueva imagen
+import Camellos from '../assets/Camellos.jpg'; // Nueva imagen
+import Delfines from '../assets/Delfines.jpg'; // Nueva imagen
 import { LanguageContext } from '../context/LanguageContext'; // Importar el contexto de idioma
 
 const CarruselImagenes: React.FC = () => {
@@ -53,11 +55,6 @@ const CarruselImagenes: React.FC = () => {
   // Descripciones en español e inglés
   const imagesWithText = [
     {
-      img: ViajeEnGlobo,
-      desc_es: 'Viaje en Globo',
-      desc_en: 'Hot Air Balloon Ride',
-    },
-    {
       img: Surfear,
       desc_es: 'Surf en Cabo',
       desc_en: 'Surfing in Cabo',
@@ -81,6 +78,21 @@ const CarruselImagenes: React.FC = () => {
       img: RestauranteCarrusel,
       desc_es: 'Disfruta en nuestros restaurantes',
       desc_en: 'Enjoy our restaurants',
+    },
+    {
+      img: Racers,
+      desc_es: 'Carreras en el desierto',
+      desc_en: 'Desert Racing',
+    },
+    {
+      img: Camellos,
+      desc_es: 'Paseo en camello',
+      desc_en: 'Camel Ride',
+    },
+    {
+      img: Delfines,
+      desc_es: 'Nado con delfines',
+      desc_en: 'Swimming with Dolphins',
     },
   ];
 
