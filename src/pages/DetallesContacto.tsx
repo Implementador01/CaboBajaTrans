@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { LanguageContext } from '../context/LanguageContext';
 import { useNavigate, useLocation } from 'react-router-dom';
-import StripeCheckout from '../components/StripeCheckout'; // Importamos el componente de Stripe
+import MpCheckout from '../components/MpCheckout'; 
 import ResumenOrden from '../components/ResumenOrden'; // Importamos el componente de Resumen de Orden
 
 const DetallesContacto: React.FC = () => {
@@ -62,7 +62,7 @@ const DetallesContacto: React.FC = () => {
             {language === 'es' ? 'Pago con Tarjeta' : 'Card Payment'}
           </h2>
           {/* Pasamos el total a StripeCheckout */}
-          <StripeCheckout total={total} />
+          <MpCheckout total={total} />
         </div>
       </div>
 
