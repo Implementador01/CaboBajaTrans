@@ -35,6 +35,6 @@ app.post('/create-checkout-session', async (req, res) => {
   }
 });
 
-// Escucha en el puerto especificado en .env o 5001 por defecto
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));
+
