@@ -20,7 +20,7 @@ const SobreNosotros: React.FC = () => {
           <p className="text-white text-lg">
             {language === 'es' 
               ? 'Cabo Baja Trans es una empresa dedicada al transporte en Baja California Sur, ofreciendo servicios de calidad y comodidad para nuestros clientes. Nuestra misión es hacer que cada viaje sea una experiencia inolvidable con vehículos seguros y confortables.'
-              : 'Cabo Baja Trans is a company dedicated to transportation in Baja California Sur, offering quality and comfortable services to our clients. Our mission is to make every trip an unforgettable experience with safe and comfortable vehicles.'}
+              : ' Cabo Baja Trans is a company dedicated to transportation in Baja California Sur, offering quality and comfortable services to our clients. Our mission is to make every trip an unforgettable experience with safe and comfortable vehicles.'}
           </p>
         </div>
       </div>
