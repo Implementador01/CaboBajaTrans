@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // Usar la clave secreta desde variables de entorno
+require('dotenv').config(); // Importar dotenv para las variables de entorno
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // Usar la clave secreta desde el .env
 const app = express();
 
 app.use(cors());
@@ -23,14 +24,17 @@ app.post('/create-checkout-session', async (req, res) => {
         quantity: 1,
       }],
       mode: 'payment',
-      success_url: 'https://transportadoracabo.com/gracias',  // URL de éxito en Netlify
-      cancel_url: 'https://transportadoracabo.com/cancelar',  // URL de cancelación en Netlify
+      success_url: 'https://transportadoracabo.com/gracias', // Redirige a la pantalla de agradecimiento
+      cancel_url: 'https://transportadoracabo.com/pago-fallido', // Redirige a la pantalla de pago fallido
     });
 
     res.json({ id: session.id });
   } catch (error) {
+    console.error('Error creando sesión de pago:', error);
     res.status(500).json({ error: error.message });
   }
 });
 
-app.listen(process.env.PORT || 5001, () => console.log(`Servidor corriendo en el puerto ${process.env.PORT || 5001}`));
+// Escucha en el puerto especificado en .env o 5001 por defecto
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));
