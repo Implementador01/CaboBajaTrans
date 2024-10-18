@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { LanguageContext } from '../context/LanguageContext';
 import { useNavigate, useLocation } from 'react-router-dom';
-import MpCheckout from '../components/MpCheckout'; 
+import MpCheckout from '../components/StripeCheckout'; 
 import ResumenOrden from '../components/ResumenOrden'; // Importamos el componente de Resumen de Orden
 
 const DetallesContacto: React.FC = () => {
