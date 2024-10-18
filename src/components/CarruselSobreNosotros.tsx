@@ -35,7 +35,7 @@ const CarruselSobreNosotros: React.FC = () => {
     { comentario: "Excelente atención desde el primer contacto. El chofer fue muy amable y nos ayudó con nuestras maletas.", cliente: "Pedro Sánchez" },
     { comentario: "Recomiendo este servicio al 100%. Nos hicieron sentir cómodos y seguros durante todo el trayecto.", cliente: "Laura Ramírez" }
   ] : [
-    { comentario: "An unforgettable experience! The service was impeccable and the trip very comfortable. I will definitely recommend it.", cliente: "John Perez" },
+    { comentario: "An really unforgettable experience! The service was impeccable and the trip very comfortable. I will definitely recommend it.", cliente: "John Perez" },
     { comentario: "The driver was very friendly and professional. Everything went perfect, we enjoyed our trip in Cabo.", cliente: "Maria Rodriguez" },
     { comentario: "The best transportation service in Los Cabos! Punctual, with comfortable vehicles and excellent customer service.", cliente: "Charles Martinez" },
     { comentario: "Great service. They were punctual and the vehicles are in excellent condition. We felt very safe.", cliente: "Anna Gonzalez" },
