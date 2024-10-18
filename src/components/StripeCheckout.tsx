@@ -3,7 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { LanguageContext } from '../context/LanguageContext';
 import { FaCreditCard } from 'react-icons/fa';
 
-// Inicializa Stripe con tu clave pública
+// Cargar la clave pública de Stripe (asegúrate de reemplazarla con la tuya)
 const stripePromise = loadStripe('pk_live_51Q6G3D01kPYg7t5t6s4PEgtgHTtEEezeUVzlweRDVmQRbRfj5cJHm0DNtzdYyd8Z0IGDkGhJe9Nl6VG3DABQNdS300cPxdkXho');
 
 interface StripeCheckoutProps {
@@ -15,12 +15,12 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ total }) => {
   const [loading, setLoading] = useState(false);
 
   const handleCheckout = async () => {
-    setLoading(true); // Inicia el estado de carga
+    setLoading(true); // Cambia el estado a "cargando"
     const stripe = await stripePromise;
 
     try {
-      // Solicita la creación de la sesión de pago
-      const response = await fetch('https://tu-backend.vercel.app/create-checkout-session', {
+      // Hacer la solicitud al backend para crear la sesión de pago
+      const response = await fetch('http://localhost:5001/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -34,9 +34,9 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ total }) => {
         }),
       });
 
-      const { id } = await response.json(); // Obtiene el ID de la sesión de pago
+      const { id } = await response.json(); // Extraer el session ID del backend
 
-      // Redirige al checkout de Stripe
+      // Redirigir al usuario al checkout de Stripe
       const { error } = await stripe!.redirectToCheckout({ sessionId: id });
 
       if (error) {
@@ -45,7 +45,7 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ total }) => {
     } catch (error) {
       console.error('Error al crear la sesión de pago:', error);
     } finally {
-      setLoading(false); // Finaliza el estado de carga
+      setLoading(false); // Restablece el estado
     }
   };
 

@@ -15,6 +15,7 @@
     "@stripe/stripe-js": "^4.8.0",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-slick": "^0.23.13",
+    "@vercel/speed-insights": "^1.0.12",
     "axios": "^1.7.7",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
@@ -31,7 +32,7 @@
     "react-router-dom": "^6.26.2",
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",
-    "stripe": "^17.2.0"
+    "stripe": "^17.2.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

@@ -3,13 +3,14 @@ const express = require('express');
 const cors = require('cors');
 const Stripe = require('stripe');
 
-// Usa la clave secreta desde el entorno
+// Configura Stripe con la clave secreta
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+app.use(cors()); // Permitir solicitudes de otros orígenes
+app.use(express.json()); // Analizar JSON
 
+// Endpoint para crear una sesión de pago
 app.post('/create-checkout-session', async (req, res) => {
   const { items } = req.body;
 
@@ -19,24 +20,23 @@ app.post('/create-checkout-session', async (req, res) => {
       line_items: items.map((item) => ({
         price_data: {
           currency: 'usd',
-          product_data: {
-            name: item.title,
-          },
-          unit_amount: item.unit_price * 100,
+          product_data: { name: item.title },
+          unit_amount: item.unit_price * 100, // Convertir a centavos
         },
         quantity: item.quantity,
       })),
       mode: 'payment',
-      success_url: 'https://transportadoracabo.com/gracias',
-      cancel_url: 'https://transportadoracabo.com/pago-fallido',
+      success_url: 'http://localhost:3000/pantalla-gracias',
+      cancel_url: 'http://localhost:3000/pago-fallido',
     });
 
-    res.json({ id: session.id });
+    res.json({ id: session.id }); // Responder con el ID de la sesión
   } catch (error) {
     console.error('Error al crear la sesión de pago:', error);
     res.status(500).json({ error: error.message });
   }
 });
 
+// Iniciar el servidor en el puerto 5001
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));
+app.listen(PORT, () => console.log(`Servidor corriendo en http://localhost:${PORT}`));
