@@ -7,7 +7,7 @@ import { FaCreditCard } from 'react-icons/fa'; // Ícono de tarjeta de crédito
 initMercadoPago('TU_PUBLIC_KEY', { locale: 'es-MX' });
 
 interface MpCheckoutProps {
-  total: number;
+  total: number; // Total en dólares
 }
 
 const MpCheckout: React.FC<MpCheckoutProps> = ({ total }) => {
@@ -16,14 +16,14 @@ const MpCheckout: React.FC<MpCheckoutProps> = ({ total }) => {
 
   const createPreference = async () => {
     try {
-      const response = await fetch('https://tu-backend-vercel.com/create-preference', {
+      const response = await fetch('https://tu-backend.vercel.app/create-preference', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items: [
             {
               title: 'Reserva de Camioneta',
-              unit_price: total,
+              unit_price: total, // Precio en dólares
               quantity: 1,
             },
           ],
@@ -45,8 +45,8 @@ const MpCheckout: React.FC<MpCheckoutProps> = ({ total }) => {
         </p>
         <p className="text-xl font-bold mt-2">
           {language === 'es'
-            ? `Total a pagar: $${total} MXN`
-            : `Total to pay: $${total} MXN`}
+            ? `Total a pagar: $${total} USD`
+            : `Total to pay: $${total} USD`}
         </p>
       </div>
 
@@ -55,7 +55,7 @@ const MpCheckout: React.FC<MpCheckoutProps> = ({ total }) => {
         className="flex items-center justify-center w-full px-6 py-3 text-white bg-gradient-to-r from-yellow-400 to-black hover:from-yellow-300 hover:to-gray-800 focus:outline-none focus:ring-4 focus:ring-yellow-200 rounded-lg transition-all duration-300"
       >
         <FaCreditCard className="mr-2 text-white" />
-        {language === 'es' ? 'Pagar con Pago Seguro' : 'Pay with Safe Payment'}
+        {language === 'es' ? 'Pagar con Mercado Pago' : 'Pay with Mercado Pago'}
       </button>
 
       {preferenceId && (

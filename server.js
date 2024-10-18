@@ -12,13 +12,16 @@ app.use(express.json());
 // Endpoint para crear la preferencia de pago
 app.post('/create-preference', async (req, res) => {
   const preference = {
-    items: req.body.items,
+    items: req.body.items.map((item) => ({
+      ...item,
+      currency_id: 'USD', // Configura la moneda como dólares
+    })),
     back_urls: {
       success: 'https://transportadoracabo.com/gracias',
       failure: 'https://transportadoracabo.com/pago-fallido',
       pending: 'https://transportadoracabo.com/pago-pendiente',
     },
-    auto_return: 'approved', // Redirige automáticamente si se aprueba el pago
+    auto_return: 'approved', // Redirige automáticamente si el pago se aprueba
   };
 
   try {

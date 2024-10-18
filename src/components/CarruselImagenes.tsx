@@ -1,19 +1,21 @@
 import React, { useContext } from 'react';
 import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Surfear from '../assets/Surfear.avif'; 
-import Esnorquel from '../assets/Esnorquel.jpg'; 
-import ArcoLosCabos from '../assets/ArcoLosCabos.jpeg'; 
-import TuburioCarrusel from '../assets/TuburioCarrusel.jpg'; 
-import RestauranteCarrusel from '../assets/RestauranteCarrusel.jpg'; 
-import Racers from '../assets/Racers.jpg'; // Nueva imagen
-import Camellos from '../assets/Camellos.jpg'; // Nueva imagen
-import Delfines from '../assets/Delfines.jpg'; // Nueva imagen
-import { LanguageContext } from '../context/LanguageContext'; // Importar el contexto de idioma
+
+import Esnorquel from '../assets/Esnorquel.jpg';
+import ArcoLosCabos from '../assets/ArcoLosCabos.jpeg';
+import TuburioCarrusel from '../assets/TuburioCarrusel.jpg';
+import RestauranteCarrusel from '../assets/RestauranteCarrusel.jpg';
+import Racers from '../assets/Racers.jpg';
+import Camellos from '../assets/Camellos.jpg';
+import Delfines from '../assets/Delfines.jpg';
+import Surfear from '../assets/Surfear.jpg';
+
+import { LanguageContext } from '../context/LanguageContext';
 
 const CarruselImagenes: React.FC = () => {
-  const { language } = useContext(LanguageContext); // Acceder al idioma actual
+  const { language } = useContext(LanguageContext);
 
   const settings = {
     dots: true,
@@ -27,73 +29,21 @@ const CarruselImagenes: React.FC = () => {
     prevArrow: <SamplePrevArrow />,
     nextArrow: <SampleNextArrow />,
     responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
+      { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 3 } },
+      { breakpoint: 768, settings: { slidesToShow: 2, slidesToScroll: 2 } },
+      { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } },
     ],
   };
 
-  // Descripciones en español e inglés
   const imagesWithText = [
-    {
-      img: Surfear,
-      desc_es: 'Surf en Cabo',
-      desc_en: 'Surfing in Cabo',
-    },
-    {
-      img: Esnorquel,
-      desc_es: 'Esnórquel en las aguas cristalinas',
-      desc_en: 'Snorkeling in crystal clear waters',
-    },
-    {
-      img: ArcoLosCabos,
-      desc_es: 'El Arco de Los Cabos',
-      desc_en: 'The Arch of Los Cabos',
-    },
-    {
-      img: TuburioCarrusel,
-      desc_es: 'Descubre La Vida Nocturna',
-      desc_en: 'Discover the Nightlife',
-    },
-    {
-      img: RestauranteCarrusel,
-      desc_es: 'Disfruta en nuestros restaurantes',
-      desc_en: 'Enjoy our restaurants',
-    },
-    {
-      img: Racers,
-      desc_es: 'Carreras en el desierto',
-      desc_en: 'Desert Racing',
-    },
-    {
-      img: Camellos,
-      desc_es: 'Paseo en camello',
-      desc_en: 'Camel Ride',
-    },
-    {
-      img: Delfines,
-      desc_es: 'Nado con delfines',
-      desc_en: 'Swimming with Dolphins',
-    },
+    { img: Surfear, desc_es: 'Surf en Cabo', desc_en: 'Surfing in Cabo' },
+    { img: Esnorquel, desc_es: 'Esnórquel en aguas cristalinas', desc_en: 'Snorkeling in crystal clear waters' },
+    { img: ArcoLosCabos, desc_es: 'El Arco de Los Cabos', desc_en: 'The Arch of Los Cabos' },
+    { img: TuburioCarrusel, desc_es: 'Descubre la vida nocturna', desc_en: 'Discover the Nightlife' },
+    { img: RestauranteCarrusel, desc_es: 'Disfruta en nuestros restaurantes', desc_en: 'Enjoy our restaurants' },
+    { img: Racers, desc_es: 'Carreras en el desierto', desc_en: 'Desert Racing' },
+    { img: Camellos, desc_es: 'Paseo en camello', desc_en: 'Camel Ride' },
+    { img: Delfines, desc_es: 'Nado con delfines', desc_en: 'Swimming with Dolphins' },
   ];
 
   return (
@@ -104,11 +54,14 @@ const CarruselImagenes: React.FC = () => {
 
       <Slider {...settings} className="mx-auto max-w-6xl">
         {imagesWithText.map((item, index) => (
-          <div key={index} className="relative flex justify-center items-center h-[500px]">
-            <img 
-              src={item.img} 
-              alt={language === 'es' ? item.desc_es : item.desc_en} 
-              className="w-full h-full object-cover rounded-lg shadow-lg" 
+          <div
+            key={index}
+            className="relative flex justify-center items-center w-full h-[250px] overflow-hidden"
+          >
+            <img
+              src={item.img}
+              alt={language === 'es' ? item.desc_es : item.desc_en}
+              className="w-full h-full object-cover rounded-lg shadow-lg"
             />
             <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg">
               <h3 className="text-white text-xl md:text-2xl font-bold text-center">
@@ -122,18 +75,12 @@ const CarruselImagenes: React.FC = () => {
   );
 };
 
-// Funciones para personalizar las flechas
 const SamplePrevArrow = (props: any) => {
   const { className, style, onClick } = props;
   return (
-    <div 
+    <div
       className={className}
-      style={{ 
-        ...style, 
-        display: 'block', 
-        left: '-50px',
-        zIndex: 1,
-      }} 
+      style={{ ...style, display: 'block', left: '-50px', zIndex: 1 }}
       onClick={onClick}
     />
   );
@@ -142,14 +89,9 @@ const SamplePrevArrow = (props: any) => {
 const SampleNextArrow = (props: any) => {
   const { className, style, onClick } = props;
   return (
-    <div 
+    <div
       className={className}
-      style={{ 
-        ...style, 
-        display: 'block', 
-        right: '-50px',
-        zIndex: 1,
-      }} 
+      style={{ ...style, display: 'block', right: '-50px', zIndex: 1 }}
       onClick={onClick}
     />
   );
