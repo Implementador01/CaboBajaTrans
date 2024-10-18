@@ -11,7 +11,7 @@ interface PrecioParams {
 // Mapeo de precios por zona para cada tipo de camioneta
 const preciosPorZona: { [key in Zona]?: { [key: string]: number } } = {
   zona1: {
-    "SUV (1-5 PAX)": 70,
+    "Expedition (1-5 PAX)": 70,
     "VAN 1-10": 75,
     "ESCALADE 1-5": 100,
     "JAC 1-14": 100,
@@ -19,7 +19,7 @@ const preciosPorZona: { [key in Zona]?: { [key: string]: number } } = {
     "Expedition 1-5": 100
   },
   zona2: {
-    "SUV (1-5 PAX)": 75,
+    "Expedition (1-5 PAX)": 75,
     "VAN 1-10": 80,
     "ESCALADE 1-5": 100,
     "JAC 1-14": 100,
@@ -27,7 +27,7 @@ const preciosPorZona: { [key in Zona]?: { [key: string]: number } } = {
     "Expedition 1-5": 100
   },
   zona3: {
-    "SUV (1-5 PAX)": 85,
+    "Expedition (1-5 PAX)": 85,
     "VAN 1-10": 90,
     "ESCALADE 1-5": 120,
     "JAC 1-14": 110,
@@ -35,7 +35,7 @@ const preciosPorZona: { [key in Zona]?: { [key: string]: number } } = {
     "Expedition 1-5": 120
   },
   zona4: {
-    "SUV (1-5 PAX)": 100,
+    "Expedition (1-5 PAX)": 100,
     "VAN 1-10": 105,
     "ESCALADE 1-5": 120,
     "JAC 1-14": 110,
@@ -43,7 +43,7 @@ const preciosPorZona: { [key in Zona]?: { [key: string]: number } } = {
     "Expedition 1-5":120
   },
   zona5: {
-    "SUV (1-5 PAX)": 100,
+    "Expedition (1-5 PAX)": 100,
     "VAN 1-10": 105,
     "ESCALADE 1-5": 120,
     "JAC 1-14": 110,
