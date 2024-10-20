@@ -20,7 +20,7 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ total }) => {
 
     try {
       // Hacer la solicitud al backend para crear la sesión de pago
-      const response = await fetch('http://localhost:5001/create-checkout-session', {
+      const response = await fetch('http://localhost:5002/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -33,6 +33,7 @@ const StripeCheckout: React.FC<StripeCheckoutProps> = ({ total }) => {
           ],
         }),
       });
+      
 
       const { id } = await response.json(); // Extraer el session ID del backend
 

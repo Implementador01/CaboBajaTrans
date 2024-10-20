@@ -3,12 +3,10 @@ const Stripe = require('stripe');
 const cors = require('cors');
 require('dotenv').config();
 
-const app = express();
+// Usa la clave secreta de Stripe y asegúrate de la versión correcta
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// Inicia Stripe con la versión de API explícita
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2024-09-30',
-});
+const app = express();
 
 app.use(cors());
 app.use(express.json());
@@ -40,9 +38,7 @@ app.post('/create-checkout-session', async (req, res) => {
   }
 });
 
-const PORT = 5001;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
-
-console.log('Stripe Secret Key:', process.env.STRIPE_SECRET_KEY);
