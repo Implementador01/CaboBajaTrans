@@ -22,7 +22,7 @@ function App() {
             <Route path="/opcionales" element={<Opcionales />} />
             <Route path="/nuestros-transportes" element={<NuestrosTransportes />} />
             <Route path="/detalles-contacto" element={<DetallesContacto />} />
-            <Route path='/confirmacion-pago' element={<ConfirmacionPago />} />
+            <Route path="/confirmacion-pago" element={<ConfirmacionPago />} />
             <Route path="/gracias" element={<PantallaGracias />} /> 
             <Route path="/sobre-nosotros" element={<SobreNosotros />} /> 
             <Route path="/pago-fallido" element={<PagoFallido />} /> {/* Ruta de pago fallido */}
